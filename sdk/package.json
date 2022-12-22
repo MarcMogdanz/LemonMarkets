@@ -1,0 +1,12 @@
+{
+  "name": "lemonmarkets",
+  "version": "0.1.0",
+  "main": "index.ts",
+  "repository": "git@github.com:MarcMogdanz/LemonMarkets.git",
+  "author": "Marc Mogdanz <hey@marcmogdanz.de>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.2.1",
+    "class-transformer": "^0.5.1"
+  }
+}
