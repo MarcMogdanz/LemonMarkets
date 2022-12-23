@@ -8,6 +8,10 @@ defaults:
 
 jobs:
   checks:
+    strategy:
+      matrix:
+        version: [16, 18]
+
     runs-on: ubuntu-latest
 
     steps:
@@ -27,10 +31,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Setup Node.js 16.x
+      - name: Setup Node.js ${{ matrix.version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: ${{ matrix.version }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
