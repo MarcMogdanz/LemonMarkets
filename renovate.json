@@ -4,6 +4,5 @@
   "reviewers": ["MarcMogdanz"],
   "prHourlyLimit": 3,
   "prConcurrentLimit": 10,
-  "branchConcurrentLimit": 10,
-  "schedule": ["at any time"]
+  "branchConcurrentLimit": 10
 }
