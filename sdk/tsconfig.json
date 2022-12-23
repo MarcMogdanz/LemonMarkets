@@ -5,6 +5,8 @@
     "target": "es5",
     "module": "commonjs",
     "lib": ["ES2020"],
+    "outDir": "./dist",
+    "rootDir": "./src",
 
     /* Strict Type-Checking Options */
     "strict": true /* Enable all strict type-checking options. */,
