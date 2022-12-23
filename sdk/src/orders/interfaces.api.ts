@@ -1,12 +1,5 @@
 import { ApiResponseMetadata } from "../common/interfaces.api";
-import {
-  AccountMode,
-  DataPlan,
-  OrderSide,
-  OrderStatus,
-  Plan,
-  TradingPlan,
-} from "../common/types";
+import { OrderSide, OrderStatus } from "../common/types";
 
 export interface ApiOrder extends ApiResponseMetadata {
   results: {

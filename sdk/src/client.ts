@@ -19,6 +19,7 @@ export class LemonMarkets {
   constructor({
     env = LemonMarketsEnvironment.PAPER,
     tradingKey,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     marketDataKey,
   }: LemonMarketsOptions) {
     this.tradingClient = new TradingClient(env, tradingKey);
@@ -54,6 +55,7 @@ class TradingClient {
 }
 
 // TODO
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class MarketDataClient {
   //
 }

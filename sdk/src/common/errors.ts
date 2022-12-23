@@ -25,7 +25,7 @@ export class LemonError extends Error {
   }
 
   static parse(
-    error: Error | AxiosError | any,
+    error: Error | AxiosError | unknown,
     fallbackMessage?: string
   ): LemonError {
     if (isAxiosError(error) && error.response?.status) {

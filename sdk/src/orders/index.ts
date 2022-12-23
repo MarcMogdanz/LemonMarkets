@@ -1,16 +1,9 @@
-import { AxiosInstance, isAxiosError } from "axios";
+import { AxiosInstance } from "axios";
 import { plainToClass } from "class-transformer";
 import { LemonBase } from "../common/classes";
 import { convertMetadata } from "../common/convertMetadata";
-import {
-  AccountMode,
-  DataPlan,
-  OrderSide,
-  OrderStatus,
-  Plan,
-  TradingPlan,
-} from "../common/types";
-import { LemonBadRequestError, LemonError } from "../common/errors";
+import { LemonError } from "../common/errors";
+import { OrderSide, OrderStatus } from "../common/types";
 import { ApiOrder } from "./interfaces.api";
 import { PlaceOrderOptions } from "./interfaces.internal";
 
