@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import { plainToClass } from "class-transformer";
+import { LemonMetadata, LemonResponse } from "../common/classes";
 import { convertMetadata } from "../common/convertMetadata";
 import { LemonError } from "../common/errors";
 import { Plan } from "../common/types";
@@ -18,15 +19,15 @@ export class Account {
     this.axiosInstance = axiosInstance;
   }
 
-  public async getAccount(): Promise<LemonAccount> {
+  public async getAccount(): Promise<LemonResponse<LemonAccount>> {
     try {
       const res = await this.axiosInstance.get<ApiGetAccountResponse>(
         "/account"
       );
       const apiAccount = res.data.results;
 
-      return plainToClass(LemonAccount, {
-        metadata: convertMetadata(res.data),
+      const metadata: LemonMetadata = convertMetadata(res.data);
+      const account: LemonAccount = plainToClass(LemonAccount, {
         createdAt: new Date(apiAccount.created_at),
         accountId: apiAccount.account_id,
         firstName: apiAccount.firstname,
@@ -67,6 +68,8 @@ export class Account {
           ? new Date(apiAccount.tax_allowance_end)
           : null,
       });
+
+      return new LemonResponse(metadata, account);
     } catch (err) {
       throw LemonError.parse(err, "An error occurred while getting account");
     }
@@ -74,11 +77,15 @@ export class Account {
 
   public async createWithdrawal(
     options: CreateWithdrawalOptions
-  ): Promise<void> {
+  ): Promise<LemonResponse<null>> {
     try {
-      await this.axiosInstance.post("/account/withdrawals", {
+      const res = await this.axiosInstance.post("/account/withdrawals", {
         amount: options.amount,
       });
+
+      const metadata: LemonMetadata = convertMetadata(res.data);
+
+      return new LemonResponse(metadata, null);
     } catch (err) {
       throw LemonError.parse(
         err,
@@ -89,7 +96,7 @@ export class Account {
 
   public async getWithdrawals(
     options?: GetWithdrawalsOptions
-  ): Promise<LemonWithdrawal[]> {
+  ): Promise<LemonResponse<LemonWithdrawal[]>> {
     try {
       const res = await this.axiosInstance.get<ApiGetWithdrawalsResponse>(
         "/account/withdrawals",
@@ -97,9 +104,9 @@ export class Account {
       );
       const apiWithdrawals = res.data.results;
 
-      return apiWithdrawals.map((withdrawal) =>
+      const metadata: LemonMetadata = convertMetadata(res.data);
+      const withdrawals: LemonWithdrawal[] = apiWithdrawals.map((withdrawal) =>
         plainToClass(LemonWithdrawal, {
-          metadata: convertMetadata(res.data),
           id: withdrawal.id,
           amount: withdrawal.amount,
           createdAt: new Date(withdrawal.created_at),
@@ -107,6 +114,8 @@ export class Account {
           idempotency: withdrawal.idempotency,
         })
       );
+
+      return new LemonResponse(metadata, withdrawals);
     } catch (err) {
       throw LemonError.parse(
         err,

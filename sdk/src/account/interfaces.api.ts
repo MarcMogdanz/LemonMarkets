@@ -1,6 +1,7 @@
 import { ApiBaseResponse } from "../common/interfaces.api";
 import { AccountMode, DataPlan, Plan, TradingPlan } from "../common/types";
 
+// objects
 interface ApiAccount {
   created_at: string;
   account_id: string;
@@ -45,6 +46,7 @@ interface ApiWithdrawal {
   idempotency?: string;
 }
 
+// responses
 export interface ApiGetAccountResponse extends ApiBaseResponse<ApiAccount> {}
 
 export interface ApiGetWithdrawalsResponse

@@ -1,5 +1,4 @@
-import { LemonBase } from "../common/classes";
-import { OrderStatus, OrderSide } from "../common/types";
+import { OrderSide, OrderStatus } from "../common/types";
 
 export class LemonOrderRegulatoryInformation {
   public costsEntry!: number;
@@ -23,7 +22,7 @@ export class LemonOrderRegulatoryInformation {
   public legalDisclaimer!: string;
 }
 
-export class LemonOrder extends LemonBase {
+export class LemonOrder {
   public createdAt!: Date;
   public id!: string;
   public status!: OrderStatus;

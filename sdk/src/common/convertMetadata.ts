@@ -3,7 +3,7 @@ import { LemonMetadata } from "./classes";
 import { ApiResponseMetadata } from "./interfaces.api";
 import { AccountMode, RequestStatus } from "./types";
 
-export const convertMetadata = (metadata: ApiResponseMetadata) =>
+export const convertMetadata = (metadata: ApiResponseMetadata): LemonMetadata =>
   plainToClass(LemonMetadata, {
     time: new Date(metadata.time),
     mode: metadata.mode as AccountMode,

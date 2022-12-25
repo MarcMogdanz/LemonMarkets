@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import { plainToClass } from "class-transformer";
+import { LemonMetadata, LemonResponse } from "../common/classes";
 import { convertMetadata } from "../common/convertMetadata";
 import { LemonError } from "../common/errors";
 import { LemonOrder, LemonOrderRegulatoryInformation } from "./classes";
@@ -11,7 +12,9 @@ export class Orders {
     this.axiosInstance = axiosInstance;
   }
 
-  public async placeOrder(options: PlaceOrderOptions): Promise<LemonOrder> {
+  public async placeOrder(
+    options: PlaceOrderOptions
+  ): Promise<LemonResponse<LemonOrder>> {
     try {
       const res = await this.axiosInstance.post<ApiPlaceOrderResponse>(
         "/orders",
@@ -19,8 +22,8 @@ export class Orders {
       );
       const apiOrder = res.data.results;
 
-      return plainToClass(LemonOrder, {
-        metadata: convertMetadata(res.data),
+      const metadata: LemonMetadata = convertMetadata(res.data);
+      const order: LemonOrder = plainToClass(LemonOrder, {
         createdAt: new Date(apiOrder.created_at),
         id: apiOrder.id,
         status: apiOrder.status,
@@ -71,6 +74,8 @@ export class Orders {
         keyCreationId: apiOrder.key_creation_id,
         idempotency: apiOrder.idempotency,
       });
+
+      return new LemonResponse(metadata, order);
     } catch (err) {
       throw LemonError.parse(err, "An error occurred while placing order");
     }

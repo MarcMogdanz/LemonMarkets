@@ -1,7 +1,6 @@
-import { LemonBase } from "../common/classes";
-import { AccountMode, TradingPlan, DataPlan, Plan } from "../common/types";
+import { AccountMode, DataPlan, Plan, TradingPlan } from "../common/types";
 
-export class LemonAccount extends LemonBase {
+export class LemonAccount {
   public createdAt!: Date;
   public accountId!: string;
   public firstName!: string;
@@ -37,7 +36,7 @@ export class LemonAccount extends LemonBase {
   public taxAllowanceEnd?: Date;
 }
 
-export class LemonWithdrawal extends LemonBase {
+export class LemonWithdrawal {
   public id!: string;
   public amount!: number;
   public createdAt!: Date;

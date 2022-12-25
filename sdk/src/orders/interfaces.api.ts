@@ -1,6 +1,7 @@
 import { ApiBaseResponse } from "../common/interfaces.api";
 import { OrderSide, OrderStatus } from "../common/types";
 
+// objects
 interface ApiOrder {
   created_at: string;
   id: string;
@@ -42,4 +43,5 @@ interface ApiOrder {
   idempotency?: string;
 }
 
+// responses
 export interface ApiPlaceOrderResponse extends ApiBaseResponse<ApiOrder> {}
