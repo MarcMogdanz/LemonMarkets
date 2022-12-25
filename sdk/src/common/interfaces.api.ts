@@ -1,7 +1,8 @@
 import { AccountMode } from "./types";
 
-export interface ApiResponseMetadata {
+export interface ApiResponseMetadata<T> {
   time: string;
   mode: AccountMode;
   status: "ok" | "error";
+  results: T;
 }

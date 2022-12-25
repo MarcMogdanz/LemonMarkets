@@ -3,7 +3,7 @@ import { plainToClass } from "class-transformer";
 import { convertMetadata } from "../common/convertMetadata";
 import { LemonError } from "../common/errors";
 import { LemonOrder, LemonOrderRegulatoryInformation } from "./classes";
-import { ApiOrder } from "./interfaces.api";
+import { ApiPlaceOrderResponse } from "./interfaces.api";
 import { PlaceOrderOptions } from "./interfaces.options";
 
 export class Orders {
@@ -13,7 +13,10 @@ export class Orders {
 
   public async placeOrder(options: PlaceOrderOptions): Promise<LemonOrder> {
     try {
-      const res = await this.axiosInstance.post<ApiOrder>("/orders", options);
+      const res = await this.axiosInstance.post<ApiPlaceOrderResponse>(
+        "/orders",
+        options
+      );
       const apiOrder = res.data.results;
 
       return plainToClass(LemonOrder, {

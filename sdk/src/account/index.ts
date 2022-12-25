@@ -4,7 +4,10 @@ import { convertMetadata } from "../common/convertMetadata";
 import { LemonError } from "../common/errors";
 import { Plan } from "../common/types";
 import { LemonAccount, LemonWithdrawal } from "./classes";
-import { ApiAccount, ApiWithdrawal } from "./interfaces.api";
+import {
+  ApiGetAccountResponse,
+  ApiGetWithdrawalsResponse,
+} from "./interfaces.api";
 import {
   CreateWithdrawalOptions,
   GetWithdrawalsOptions,
@@ -17,7 +20,9 @@ export class Account {
 
   public async getAccount(): Promise<LemonAccount> {
     try {
-      const res = await this.axiosInstance.get<ApiAccount>("/account");
+      const res = await this.axiosInstance.get<ApiGetAccountResponse>(
+        "/account"
+      );
       const apiAccount = res.data.results;
 
       return plainToClass(LemonAccount, {
@@ -86,7 +91,7 @@ export class Account {
     options?: GetWithdrawalsOptions
   ): Promise<LemonWithdrawal[]> {
     try {
-      const res = await this.axiosInstance.get<ApiWithdrawal>(
+      const res = await this.axiosInstance.get<ApiGetWithdrawalsResponse>(
         "/account/withdrawals",
         { params: { page: options?.page, limit: options?.limit } }
       );
