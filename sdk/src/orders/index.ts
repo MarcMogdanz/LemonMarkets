@@ -1,7 +1,6 @@
 import { AxiosInstance } from "axios";
 import { plainToClass } from "class-transformer";
 import { LemonMetadata, LemonResponse } from "../common/classes";
-import { convertMetadata } from "../common/convertMetadata";
 import { LemonError } from "../common/errors";
 import { LemonOrder, LemonOrderRegulatoryInformation } from "./classes";
 import { ApiPlaceOrderResponse } from "./interfaces.api";
@@ -22,7 +21,7 @@ export class Orders {
       );
       const apiOrder = res.data.results;
 
-      const metadata: LemonMetadata = convertMetadata(res.data);
+      const metadata: LemonMetadata = LemonMetadata.convert(res.data);
       const order: LemonOrder = plainToClass(LemonOrder, {
         createdAt: new Date(apiOrder.created_at),
         id: apiOrder.id,

@@ -1,7 +1,6 @@
 import { AxiosInstance } from "axios";
 import { plainToClass } from "class-transformer";
 import { LemonMetadata, LemonResponse } from "../common/classes";
-import { convertMetadata } from "../common/convertMetadata";
 import { LemonError } from "../common/errors";
 import { Plan } from "../common/types";
 import { LemonAccount, LemonWithdrawal } from "./classes";
@@ -26,7 +25,7 @@ export class Account {
       );
       const apiAccount = res.data.results;
 
-      const metadata: LemonMetadata = convertMetadata(res.data);
+      const metadata: LemonMetadata = LemonMetadata.convert(res.data);
       const account: LemonAccount = plainToClass(LemonAccount, {
         createdAt: new Date(apiAccount.created_at),
         accountId: apiAccount.account_id,
@@ -83,7 +82,7 @@ export class Account {
         amount: options.amount,
       });
 
-      const metadata: LemonMetadata = convertMetadata(res.data);
+      const metadata: LemonMetadata = LemonMetadata.convert(res.data);
 
       return new LemonResponse(metadata, null);
     } catch (err) {
@@ -104,7 +103,7 @@ export class Account {
       );
       const apiWithdrawals = res.data.results;
 
-      const metadata: LemonMetadata = convertMetadata(res.data);
+      const metadata: LemonMetadata = LemonMetadata.convert(res.data);
       const withdrawals: LemonWithdrawal[] = apiWithdrawals.map((withdrawal) =>
         plainToClass(LemonWithdrawal, {
           id: withdrawal.id,
