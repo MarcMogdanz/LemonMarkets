@@ -1,4 +1,4 @@
-import { ApiResponseMetadata } from "../common/interfaces.api";
+import { ApiBaseResponse } from "../common/interfaces.api";
 import { OrderSide, OrderStatus } from "../common/types";
 
 interface ApiOrder {
@@ -42,4 +42,4 @@ interface ApiOrder {
   idempotency?: string;
 }
 
-export interface ApiPlaceOrderResponse extends ApiResponseMetadata<ApiOrder> {}
+export interface ApiPlaceOrderResponse extends ApiBaseResponse<ApiOrder> {}

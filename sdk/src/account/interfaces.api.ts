@@ -1,4 +1,4 @@
-import { ApiResponseMetadata } from "../common/interfaces.api";
+import { ApiBaseResponse } from "../common/interfaces.api";
 import { AccountMode, DataPlan, Plan, TradingPlan } from "../common/types";
 
 interface ApiAccount {
@@ -45,8 +45,7 @@ interface ApiWithdrawal {
   idempotency?: string;
 }
 
-export interface ApiGetAccountResponse
-  extends ApiResponseMetadata<ApiAccount> {}
+export interface ApiGetAccountResponse extends ApiBaseResponse<ApiAccount> {}
 
 export interface ApiGetWithdrawalsResponse
-  extends ApiResponseMetadata<ApiWithdrawal[]> {}
+  extends ApiBaseResponse<ApiWithdrawal[]> {}
