@@ -5,10 +5,12 @@ import { AccountMode, RequestStatus } from "./types";
 export class LemonResponse<T> {
   public metadata!: LemonMetadata;
   public data!: T;
+  public pagination?: LemonPagination;
 
-  constructor(metadata: LemonMetadata, data: T) {
+  constructor(metadata: LemonMetadata, data: T, pagination?: LemonPagination) {
     this.metadata = metadata;
     this.data = data;
+    this.pagination = pagination;
   }
 }
 
@@ -24,4 +26,12 @@ export class LemonMetadata {
       status: metadata.status as RequestStatus,
     });
   }
+}
+
+export class LemonPagination {
+  previous?: string;
+  next?: string;
+  total!: number;
+  page!: number;
+  pages!: number;
 }

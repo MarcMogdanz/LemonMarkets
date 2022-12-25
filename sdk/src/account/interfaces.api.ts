@@ -1,4 +1,7 @@
-import { ApiBaseResponse } from "../common/interfaces.api";
+import {
+  ApiBaseResponse,
+  ApiBaseResponseWithPagination,
+} from "../common/interfaces.api";
 import { AccountMode, DataPlan, Plan, TradingPlan } from "../common/types";
 
 // objects
@@ -50,4 +53,4 @@ interface ApiWithdrawal {
 export interface ApiGetAccountResponse extends ApiBaseResponse<ApiAccount> {}
 
 export interface ApiGetWithdrawalsResponse
-  extends ApiBaseResponse<ApiWithdrawal[]> {}
+  extends ApiBaseResponseWithPagination<ApiWithdrawal[]> {}

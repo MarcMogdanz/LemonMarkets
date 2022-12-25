@@ -1,6 +1,10 @@
 import { AxiosInstance } from "axios";
 import { plainToClass } from "class-transformer";
-import { LemonMetadata, LemonResponse } from "../common/classes";
+import {
+  LemonMetadata,
+  LemonPagination,
+  LemonResponse,
+} from "../common/classes";
 import { LemonError } from "../common/errors";
 import { Plan } from "../common/types";
 import { LemonAccount, LemonWithdrawal } from "./classes";
@@ -113,8 +117,15 @@ export class Account {
           idempotency: withdrawal.idempotency,
         })
       );
+      const pagination: LemonPagination = plainToClass(LemonPagination, {
+        previous: res.data.previous,
+        next: res.data.next,
+        total: res.data.total,
+        page: res.data.page,
+        pages: res.data.pages,
+      });
 
-      return new LemonResponse(metadata, withdrawals);
+      return new LemonResponse(metadata, withdrawals, pagination);
     } catch (err) {
       throw LemonError.parse(
         err,
