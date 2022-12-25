@@ -1,11 +1,10 @@
 import { AxiosInstance } from "axios";
 import { plainToClass } from "class-transformer";
-import { LemonBase } from "../common/classes";
 import { convertMetadata } from "../common/convertMetadata";
 import { LemonError } from "../common/errors";
-import { OrderSide, OrderStatus } from "../common/types";
+import { LemonOrder, LemonOrderRegulatoryInformation } from "./classes";
 import { ApiOrder } from "./interfaces.api";
-import { PlaceOrderOptions } from "./interfaces.internal";
+import { PlaceOrderOptions } from "./interfaces.options";
 
 export class Orders {
   constructor(private axiosInstance: AxiosInstance) {
@@ -81,51 +80,4 @@ export class Orders {
   // TODO: get one order
 
   // TODO: delete order
-}
-
-//
-//
-//
-
-class LemonOrderRegulatoryInformation {
-  public costsEntry!: number;
-  public costsEntryPct!: string;
-  public costsRunning!: number;
-  public costsRunningPct!: string;
-  public costsProduct!: number;
-  public costsProductPct!: string;
-  public costsExit!: number;
-  public costsExitPct!: string;
-  public yieldReductionYear!: number;
-  public yieldReductionYearPct!: string;
-  public yieldReductionYearFollowing!: number;
-  public yieldReductionYearFollowingPct!: string;
-  public yieldReductionYearExit!: number;
-  public yieldReductionYearExitPct!: string;
-  public estimatedHoldingDurationYears!: string;
-  public estimatedYieldReductionTotal!: number;
-  public estimatedYieldReductionTotalPct!: string;
-  public KIID!: string;
-  public legalDisclaimer!: string;
-}
-
-class LemonOrder extends LemonBase {
-  public createdAt!: Date;
-  public id!: string;
-  public status!: OrderStatus;
-  public regulatoryInformation!: LemonOrderRegulatoryInformation;
-  public isin!: string;
-  public expiresAt!: Date;
-  public side!: OrderSide;
-  public quantity!: number;
-  public stopPrice?: number;
-  public limitPrice?: number;
-  public venue!: string;
-  public estimatedPrice!: number;
-  public estimatedPriceTotal!: number;
-  public notes?: string;
-  public charge!: number;
-  public chargeableAt?: Date;
-  public keyCreationId!: string;
-  public idempotency?: string;
 }
