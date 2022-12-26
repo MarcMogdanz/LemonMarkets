@@ -5,7 +5,7 @@ import { LemonBadRequestError, LemonError } from "../common/errors";
 import { dateToYYYYMMDD } from "../common/functions";
 import { LemonOrder, LemonOrderRegulatoryInformation } from "./classes";
 import { ApiPlaceOrderResponse } from "./interfaces.api";
-import { PlaceOrderOptions } from "./interfaces.options";
+import { ActivateOrderOptions, PlaceOrderOptions } from "./interfaces.options";
 
 export class Orders {
   constructor(private axiosInstance: AxiosInstance) {
@@ -99,7 +99,22 @@ export class Orders {
     }
   }
 
-  // TODO: activate order
+  public async activateOrder(
+    options: ActivateOrderOptions
+  ): Promise<LemonResponse<null>> {
+    try {
+      const res = await this.axiosInstance.post(
+        `/orders/${options.orderId}/activate`,
+        { pin: options.pin }
+      );
+
+      const metadata: LemonMetadata = LemonMetadata.convert(res.data);
+
+      return new LemonResponse(metadata, null);
+    } catch (err) {
+      throw LemonError.parse(err, "An error occurred while activating order");
+    }
+  }
 
   // TODO: get orders
 

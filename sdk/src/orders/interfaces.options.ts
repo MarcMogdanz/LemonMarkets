@@ -16,3 +16,8 @@ export interface PlaceOrderOptions {
   notes?: string;
   idempotency?: string;
 }
+
+export interface ActivateOrderOptions {
+  orderId: string;
+  pin: string;
+}
