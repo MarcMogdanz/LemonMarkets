@@ -145,7 +145,7 @@ export class LemonError extends Error {
           return new LemonForbiddenError(fallbackMessage);
 
         case 404:
-          return new LemonNotFoundError(fallbackMessage);
+          return new LemonNotFoundError("Resource could not be found");
 
         case 409:
           return new LemonConflictError(fallbackMessage);
