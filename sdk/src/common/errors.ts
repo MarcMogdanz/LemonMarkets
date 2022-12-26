@@ -38,22 +38,11 @@ export class LemonError extends Error {
       // specific errors
       switch (errorCode) {
         case "invalid_query":
-          if (
-            String(error.response.data.error_message).startsWith(
-              "Invalid 'amount'"
-            )
-          ) {
-            throw new LemonBadRequestError("Invalid amount");
-          }
-
-          if (
-            String(error.response.data.error_message).startsWith(
-              "Invalid 'limit'"
-            )
-          ) {
-            throw new LemonBadRequestError("Invalid limit");
-          }
-          break;
+          throw new LemonBadRequestError(
+            error.response.data.error_message
+              ? `Query is not valid: ${error.response.data.error_message}`
+              : "Query is not valid"
+          );
 
         case "order_idempotency_violation":
           throw new LemonBadRequestError(
