@@ -33,8 +33,6 @@ export class LemonError extends Error {
     }
 
     if (isAxiosError(error) && error.response?.status) {
-      console.log("err", error.response.data);
-
       const errorCode = error.response.data.error_code;
 
       // specific errors
