@@ -7,6 +7,7 @@ module.exports = {
     semi: ["error", "always"],
     quotes: ["error", "double"],
     "@typescript-eslint/no-empty-interface": "off",
+    "no-console": "error",
     "@typescript-eslint/no-explicit-any": "error",
     // needs to be disabled for the typescript version of the rule to work
     "no-unused-vars": "off",
