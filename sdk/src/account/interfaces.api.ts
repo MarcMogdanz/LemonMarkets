@@ -2,7 +2,13 @@ import {
   ApiBaseResponse,
   ApiBaseResponseWithPagination,
 } from "../common/interfaces.api";
-import { AccountMode, DataPlan, Plan, TradingPlan } from "../common/types";
+import {
+  AccountMode,
+  BankStatementType,
+  DataPlan,
+  Plan,
+  TradingPlan,
+} from "../common/types";
 
 // objects
 interface ApiAccount {
@@ -49,8 +55,23 @@ interface ApiWithdrawal {
   idempotency?: string;
 }
 
+interface ApiBankStatement {
+  id: string;
+  account_id: string;
+  type: BankStatementType;
+  date: string;
+  amount: number;
+  isin?: string;
+  isin_title?: string;
+  created_at: string;
+  quantity?: number;
+}
+
 // responses
 export interface ApiGetAccountResponse extends ApiBaseResponse<ApiAccount> {}
 
 export interface ApiGetWithdrawalsResponse
   extends ApiBaseResponseWithPagination<ApiWithdrawal[]> {}
+
+export interface ApiGetBankStatementsResponse
+  extends ApiBaseResponse<ApiBankStatement[]> {}

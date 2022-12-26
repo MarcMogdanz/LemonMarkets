@@ -5,15 +5,18 @@ import {
   LemonPagination,
   LemonResponse,
 } from "../common/classes";
-import { LemonError } from "../common/errors";
+import { LemonBadRequestError, LemonError } from "../common/errors";
+import { dateToYYYYMMDD } from "../common/functions";
 import { Plan } from "../common/types";
-import { LemonAccount, LemonWithdrawal } from "./classes";
+import { LemonAccount, LemonBankStatement, LemonWithdrawal } from "./classes";
 import {
   ApiGetAccountResponse,
+  ApiGetBankStatementsResponse,
   ApiGetWithdrawalsResponse,
 } from "./interfaces.api";
 import {
   CreateWithdrawalOptions,
+  GetBankStatementsOptions,
   GetWithdrawalsOptions,
 } from "./interfaces.options";
 
@@ -138,5 +141,73 @@ export class Account {
 
   // TODO: get download document
 
-  // TODO: get bank statements
+  public async getBankStatements(
+    options?: GetBankStatementsOptions
+  ): Promise<LemonBankStatement[]> {
+    if (
+      options?.from &&
+      typeof options.from === "string" &&
+      !options.fromBeginning &&
+      isNaN(Date.parse(options.from))
+    ) {
+      throw new LemonBadRequestError("Date format for `from` is invalid");
+    }
+
+    if (
+      options?.to &&
+      typeof options.to === "string" &&
+      isNaN(Date.parse(options.to))
+    ) {
+      throw new LemonBadRequestError("Date format for `to` is invalid");
+    }
+
+    try {
+      const res = await this.axiosInstance.get<ApiGetBankStatementsResponse>(
+        "/account/bankstatements",
+        {
+          params: {
+            type: options?.type,
+            from: options?.fromBeginning
+              ? "beginning"
+              : options?.from instanceof Date
+              ? dateToYYYYMMDD(options.from)
+              : options?.from,
+            to:
+              options?.to instanceof Date
+                ? dateToYYYYMMDD(options.to)
+                : options?.to,
+            sorting:
+              options?.sorting === "OLDEST_FIRST"
+                ? "asc"
+                : options?.sorting === "NEWEST_FIRST"
+                ? "desc"
+                : undefined,
+            page: options?.page,
+            limit: options?.limit,
+          },
+        }
+      );
+      const apiBankStatements = res.data.results;
+
+      return apiBankStatements.map((statement) =>
+        plainToClass(LemonBankStatement, {
+          metadata: LemonMetadata.convert(res.data),
+          id: statement.id,
+          accountId: statement.account_id,
+          type: statement.type,
+          date: new Date(statement.date),
+          amount: statement.amount,
+          isin: statement.isin,
+          isinTitle: statement.isin_title,
+          createdAt: new Date(statement.created_at),
+          quantity: statement.quantity,
+        })
+      );
+    } catch (err) {
+      throw LemonError.parse(
+        err,
+        "An error occurred while getting bank statements"
+      );
+    }
+  }
 }

@@ -12,3 +12,12 @@ export type OrderStatus =
   | "expired";
 export type OrderSide = "buy" | "sell";
 export type RequestStatus = "ok" | "error";
+export type BankStatementType =
+  | "pay_in"
+  | "pay_out"
+  | "order_buy"
+  | "order_sell"
+  | "eod_balance"
+  | "dividend"
+  | "tax_refunded";
+export type SortDirection = "OLDEST_FIRST" | "NEWEST_FIRST"; // asc = oldest first; desc = newest first

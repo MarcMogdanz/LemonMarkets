@@ -1,4 +1,10 @@
-import { AccountMode, DataPlan, Plan, TradingPlan } from "../common/types";
+import {
+  AccountMode,
+  BankStatementType,
+  DataPlan,
+  Plan,
+  TradingPlan,
+} from "../common/types";
 
 export class LemonAccount {
   public createdAt!: Date;
@@ -42,4 +48,16 @@ export class LemonWithdrawal {
   public createdAt!: Date;
   public date?: Date;
   public idempotency?: string;
+}
+
+export class LemonBankStatement {
+  public id!: string;
+  public accountId!: string;
+  public type!: BankStatementType;
+  public date!: Date;
+  public amount!: number;
+  public isin?: string;
+  public isinTitle?: string;
+  public createdAt!: Date;
+  public quantity?: number;
 }
