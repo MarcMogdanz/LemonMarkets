@@ -28,6 +28,10 @@ export class LemonError extends Error {
     error: Error | AxiosError | unknown,
     fallbackMessage?: string
   ): LemonError {
+    if (error instanceof LemonError) {
+      return error;
+    }
+
     if (isAxiosError(error) && error.response?.status) {
       console.log("err", error.response.data);
 
