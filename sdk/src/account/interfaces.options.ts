@@ -1,8 +1,7 @@
+import { PaginationOptions } from "../common/interfaces.options";
+
 export interface CreateWithdrawalOptions {
   amount: number;
 }
 
-export interface GetWithdrawalsOptions {
-  page?: number;
-  limit?: number;
-}
+export interface GetWithdrawalsOptions extends PaginationOptions {}
