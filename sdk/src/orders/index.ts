@@ -1,7 +1,8 @@
 import { AxiosInstance } from "axios";
 import { plainToClass } from "class-transformer";
 import { LemonMetadata, LemonResponse } from "../common/classes";
-import { LemonError } from "../common/errors";
+import { LemonBadRequestError, LemonError } from "../common/errors";
+import { dateToYYYYMMDD } from "../common/functions";
 import { LemonOrder, LemonOrderRegulatoryInformation } from "./classes";
 import { ApiPlaceOrderResponse } from "./interfaces.api";
 import { PlaceOrderOptions } from "./interfaces.options";
@@ -14,10 +15,28 @@ export class Orders {
   public async placeOrder(
     options: PlaceOrderOptions
   ): Promise<LemonResponse<LemonOrder>> {
+    if (
+      options.expires_at &&
+      typeof options.expires_at === "string" &&
+      // check if absolute date
+      isNaN(Date.parse(options.expires_at)) &&
+      // TODO: make regex more precise?
+      // check if range of days
+      /[\d]{1,2}[d|D]/.exec(options.expires_at) === null
+    ) {
+      throw new LemonBadRequestError("Date format for `expires_at` is invalid");
+    }
+
     try {
       const res = await this.axiosInstance.post<ApiPlaceOrderResponse>(
         "/orders",
-        options
+        {
+          ...options,
+          expires_at:
+            options.expires_at instanceof Date
+              ? dateToYYYYMMDD(options.expires_at)
+              : options.expires_at,
+        }
       );
       const apiOrder = res.data.results;
 
