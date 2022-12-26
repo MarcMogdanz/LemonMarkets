@@ -85,9 +85,10 @@ export class Account {
     options: CreateWithdrawalOptions
   ): Promise<LemonResponse<null>> {
     try {
-      const res = await this.axiosInstance.post("/account/withdrawals", {
-        amount: options.amount,
-      });
+      const res = await this.axiosInstance.post(
+        "/account/withdrawals",
+        options
+      );
 
       const metadata: LemonMetadata = LemonMetadata.convert(res.data);
 

@@ -10,7 +10,7 @@ jobs:
   checks:
     strategy:
       matrix:
-        version: [16, 18]
+        version: ["16.x", "18.x"]
 
     runs-on: ubuntu-latest
 
