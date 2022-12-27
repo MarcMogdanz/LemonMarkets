@@ -1,7 +1,5 @@
 import { PaginationOptions } from "../common/interfaces.options";
-import { OrderStatus, OrderType } from "../common/types";
-
-type OrderSide = "buy" | "sell";
+import { OrderSide, OrderStatus, OrderType } from "../common/types";
 
 export interface PlaceOrderOptions {
   isin: string;
