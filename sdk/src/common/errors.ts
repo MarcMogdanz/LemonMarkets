@@ -50,82 +50,82 @@ export class LemonError extends Error {
           );
 
         case "token_invalid":
-          return new LemonUnauthorizedError(
+          throw new LemonUnauthorizedError(
             "Your API key is revoked or user is deleted/suspended"
           );
 
         case "pin_not_set":
-          return new LemonConflictError("PIN is not set");
+          throw new LemonConflictError("PIN is not set");
 
         case "pin_missing":
-          return new LemonBadRequestError("PIN is missing");
+          throw new LemonBadRequestError("PIN is missing");
 
         case "pin_invalid":
-          return new LemonForbiddenError("PIN is invalid");
+          throw new LemonForbiddenError("PIN is invalid");
 
         case "withdraw_insufficient_funds":
-          return new LemonUnprocessableEntityError("Insufficient funds");
+          throw new LemonUnprocessableEntityError("Insufficient funds");
 
         case "withdraw_limit_exceeded":
-          return new LemonUnprocessableEntityError("Withdraw limit exceeded");
+          throw new LemonUnprocessableEntityError("Withdraw limit exceeded");
 
         case "withdraw_request_limit_exceeded":
-          return new LemonUnprocessableEntityError(
+          throw new LemonUnprocessableEntityError(
             "Withdraw request limit exceeded"
           );
 
         case "forbidden_in_current_state":
-          return new LemonConflictError("Forbidden in current state");
+          throw new LemonConflictError("Forbidden in current state");
 
         case "plan_not_allowed":
-          return new LemonPaymentRequiredError("Plan not allowed");
+          throw new LemonPaymentRequiredError("Plan not allowed");
 
         case "insufficient_holdings":
-          return new LemonUnprocessableEntityError(
+          throw new LemonUnprocessableEntityError(
             "Insufficient holdings to sell"
           );
 
         case "order_expiration_date_invalid":
-          return new LemonBadRequestError(
+          throw new LemonBadRequestError(
             "Order expires before market opens again"
           );
 
         case "order_total_price_limit_exceeded":
-          return new LemonBadRequestError("Order total price limit exceeded");
+          throw new LemonBadRequestError("Order total price limit exceeded");
 
         case "forbidden_for_venue":
-          return new LemonBadRequestError(
+          throw new LemonBadRequestError(
             "Order couldn't be placed for the venue in the current API environment"
           );
 
         case "trading_disabled":
-          return new LemonBadRequestError(
+          throw new LemonBadRequestError(
             "Order can't be placed if trading is disabled"
           );
 
         case "order_limit_exceeded":
-          return new LemonBadRequestError("Daily limit of orders exceeded");
+          throw new LemonBadRequestError("Daily limit of orders exceeded");
 
         case "instrument_not_tradable":
-          return new LemonBadRequestError("Instrument is not tradable");
+          throw new LemonBadRequestError("Instrument is not tradable");
 
         case "account_insufficient_funds":
-          return new LemonUnprocessableEntityError(
+          throw new LemonUnprocessableEntityError(
             "Insufficient funds to place or activate order"
           );
 
         case "trading_blocked":
-          return new LemonServiceUnavailableError(
+          throw new LemonServiceUnavailableError(
             "Trading is currently blocked globally"
           );
 
         case "order_not_inactive":
-          return new LemonConflictError(
+          throw new LemonConflictError(
             "Order can't be activated if it is not inactive"
           );
 
         case "order_not_terminated":
-          return new LemonConflictError(
+          throw new LemonConflictError(
             "Order can't be cancelled if it is not terminating or terminated state"
           );
       }
@@ -133,38 +133,38 @@ export class LemonError extends Error {
       // fallbacks
       switch (error.response.status) {
         case 400:
-          return new LemonBadRequestError(fallbackMessage);
+          throw new LemonBadRequestError(fallbackMessage);
 
         case 401:
-          return new LemonUnauthorizedError(fallbackMessage);
+          throw new LemonUnauthorizedError(fallbackMessage);
 
         case 402:
-          return new LemonPaymentRequiredError(fallbackMessage);
+          throw new LemonPaymentRequiredError(fallbackMessage);
 
         case 403:
-          return new LemonForbiddenError(fallbackMessage);
+          throw new LemonForbiddenError(fallbackMessage);
 
         case 404:
-          return new LemonNotFoundError("Resource could not be found");
+          throw new LemonNotFoundError("Resource could not be found");
 
         case 409:
-          return new LemonConflictError(fallbackMessage);
+          throw new LemonConflictError(fallbackMessage);
 
         case 422:
-          return new LemonUnprocessableEntityError(fallbackMessage);
+          throw new LemonUnprocessableEntityError(fallbackMessage);
 
         case 429:
-          return new LemonOutOfRateLimitError(fallbackMessage);
+          throw new LemonOutOfRateLimitError(fallbackMessage);
 
         case 500:
-          return new LemonInternalServerError(fallbackMessage);
+          throw new LemonInternalServerError(fallbackMessage);
 
         case 503:
-          return new LemonServiceUnavailableError(fallbackMessage);
+          throw new LemonServiceUnavailableError(fallbackMessage);
       }
     }
 
-    return new LemonError(LemonErrorType.GENERIC, fallbackMessage);
+    throw new LemonError(LemonErrorType.GENERIC, fallbackMessage);
   }
 }
 
