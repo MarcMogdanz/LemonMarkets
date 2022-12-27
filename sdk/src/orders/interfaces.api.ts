@@ -1,5 +1,8 @@
-import { ApiBaseResponse } from "../common/interfaces.api";
-import { OrderSide, OrderStatus } from "../common/types";
+import {
+  ApiBaseResponse,
+  ApiBaseResponseWithPagination,
+} from "../common/interfaces.api";
+import { OrderSide, OrderStatus, OrderType } from "../common/types";
 
 // objects
 interface ApiOrder {
@@ -43,5 +46,18 @@ interface ApiOrder {
   idempotency?: string;
 }
 
+export interface ApiCreatedOrder {
+  key_activation_id?: string;
+  type: OrderType;
+  executed_quantity: number;
+  executed_price: number;
+  executed_price_total: number;
+  executed_at?: string;
+  rejected_at?: string;
+}
+
 // responses
 export interface ApiPlaceOrderResponse extends ApiBaseResponse<ApiOrder> {}
+
+export interface ApiGetOrdersResponse
+  extends ApiBaseResponseWithPagination<(ApiOrder & ApiCreatedOrder)[]> {}

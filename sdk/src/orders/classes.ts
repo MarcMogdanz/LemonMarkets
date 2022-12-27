@@ -42,3 +42,13 @@ export class LemonOrder {
   public keyCreationId!: string;
   public idempotency?: string;
 }
+
+export class LemonCreatedOrder extends LemonOrder {
+  public keyActivationId?: string;
+  public type!: string;
+  public executedQuantity!: number;
+  public executedPrice!: number;
+  public executedPriceTotal!: number;
+  public executedAt?: Date;
+  public rejectedAt?: Date;
+}

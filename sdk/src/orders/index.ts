@@ -1,11 +1,23 @@
 import { AxiosInstance } from "axios";
 import { plainToClass } from "class-transformer";
-import { LemonMetadata, LemonResponse } from "../common/classes";
+import {
+  LemonMetadata,
+  LemonPagination,
+  LemonResponse,
+} from "../common/classes";
 import { LemonBadRequestError, LemonError } from "../common/errors";
 import { dateToYYYYMMDD } from "../common/functions";
-import { LemonOrder, LemonOrderRegulatoryInformation } from "./classes";
-import { ApiPlaceOrderResponse } from "./interfaces.api";
-import { ActivateOrderOptions, PlaceOrderOptions } from "./interfaces.options";
+import {
+  LemonCreatedOrder,
+  LemonOrder,
+  LemonOrderRegulatoryInformation,
+} from "./classes";
+import { ApiGetOrdersResponse, ApiPlaceOrderResponse } from "./interfaces.api";
+import {
+  ActivateOrderOptions,
+  GetOrdersOptions,
+  PlaceOrderOptions,
+} from "./interfaces.options";
 
 export class Orders {
   constructor(private axiosInstance: AxiosInstance) {
@@ -116,7 +128,114 @@ export class Orders {
     }
   }
 
-  // TODO: get orders
+  public async getOrders(
+    options?: GetOrdersOptions
+  ): Promise<LemonResponse<LemonCreatedOrder[]>> {
+    try {
+      const res = await this.axiosInstance.get<ApiGetOrdersResponse>(
+        "/orders",
+        {
+          params: {
+            from:
+              options?.from instanceof Date
+                ? dateToYYYYMMDD(options.from)
+                : options?.from,
+            to:
+              options?.to instanceof Date
+                ? dateToYYYYMMDD(options.to)
+                : options?.to,
+            isin: options?.isin,
+            side: options?.side,
+            status:
+              typeof options?.status === "string"
+                ? options?.status
+                : Array.isArray(options?.status)
+                ? options?.status.join(",")
+                : undefined,
+            type: options?.type,
+            key_creation_id: options?.keyCreationId,
+            page: options?.page,
+            limit: options?.limit,
+          },
+        }
+      );
+      const apiOrders = res.data.results;
+
+      const metadata: LemonMetadata = LemonMetadata.convert(res.data);
+      const orders: LemonCreatedOrder[] = apiOrders.map((order) =>
+        plainToClass(LemonCreatedOrder, {
+          createdAt: new Date(order.created_at),
+          id: order.id,
+          status: order.status,
+          regulatoryInformation: plainToClass(LemonOrderRegulatoryInformation, {
+            costsEntry: order.regulatory_information.costs_entry,
+            costsEntryPct: order.regulatory_information.costs_entry_pct,
+            costsRunning: order.regulatory_information.costs_running,
+            costsRunningPct: order.regulatory_information.costs_running_pct,
+            costsProduct: order.regulatory_information.costs_product,
+            costsProductPct: order.regulatory_information.costs_product_pct,
+            costsExit: order.regulatory_information.costs_exit,
+            costsExitPct: order.regulatory_information.costs_exit_pct,
+            yieldReductionYear:
+              order.regulatory_information.yield_reduction_year,
+            yieldReductionYearPct:
+              order.regulatory_information.yield_reduction_year_pct,
+            yieldReductionYearFollowing:
+              order.regulatory_information.yield_reduction_year_following,
+            yieldReductionYearFollowingPct:
+              order.regulatory_information.yield_reduction_year_following_pct,
+            yieldReductionYearExit:
+              order.regulatory_information.yield_reduction_year_exit,
+            yieldReductionYearExitPct:
+              order.regulatory_information.yield_reduction_year_exit_pct,
+            estimatedHoldingDurationYears:
+              order.regulatory_information.estimated_holding_duration_years,
+            estimatedYieldReductionTotal:
+              order.regulatory_information.estimated_yield_reduction_total,
+            estimatedYieldReductionTotalPct:
+              order.regulatory_information.estimated_yield_reduction_total_pct,
+            KIID: order.regulatory_information.KIID,
+            legalDisclaimer: order.regulatory_information.legal_disclaimer,
+          }),
+          isin: order.isin,
+          expiresAt: new Date(order.expires_at),
+          side: order.side,
+          quantity: order.quantity,
+          stopPrice: order.stop_price,
+          limitPrice: order.limit_price,
+          venue: order.venue,
+          estimatedPrice: order.estimated_price,
+          estimatedPriceTotal: order.estimated_price_total,
+          notes: order.notes,
+          charge: order.charge,
+          chargeableAt: order.chargeable_at
+            ? new Date(order.chargeable_at)
+            : null,
+          keyCreationId: order.key_creation_id,
+          idempotency: order.idempotency,
+          // additional properties to the base `LemonOrder` class
+          keyActivationId: order.key_activation_id,
+          type: order.type,
+          executedQuantity: order.executed_quantity,
+          executedPrice: order.executed_price,
+          executedPriceTotal: order.executed_price_total,
+          executedAt: order.executed_at ? new Date(order.executed_at) : null,
+          rejectedAt: order.rejected_at ? new Date(order.rejected_at) : null,
+        })
+      );
+      const pagination: LemonPagination = plainToClass(LemonPagination, {
+        previous: res.data.previous,
+        next: res.data.next,
+        total: res.data.total,
+        page: res.data.page,
+        pages: res.data.pages,
+      });
+
+      return new LemonResponse(metadata, orders, pagination);
+    } catch (err) {
+      throw LemonError.parse(err, "An error occurred while getting orders");
+    }
+  }
 
   // TODO: get one order
 

@@ -1,3 +1,6 @@
+import { PaginationOptions } from "../common/interfaces.options";
+import { OrderStatus, OrderType } from "../common/types";
+
 type OrderSide = "buy" | "sell";
 
 export interface PlaceOrderOptions {
@@ -20,4 +23,16 @@ export interface PlaceOrderOptions {
 export interface ActivateOrderOptions {
   orderId: string;
   pin: string;
+}
+
+export interface GetOrdersOptions extends PaginationOptions {
+  /** @remarks Respected format: `YYYY-MM-DD`. */
+  from?: Date | string;
+  /** @remarks Respected format: `YYYY-MM-DD`. */
+  to?: Date | string;
+  isin?: string;
+  side?: OrderSide;
+  status?: OrderStatus | OrderStatus[];
+  type?: OrderType;
+  keyCreationId?: string;
 }

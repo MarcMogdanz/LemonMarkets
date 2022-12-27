@@ -10,6 +10,7 @@ export type OrderStatus =
   | "canceled"
   | "executed"
   | "expired";
+export type OrderType = "market" | "limit" | "stop" | "stop_limit";
 export type OrderSide = "buy" | "sell";
 export type RequestStatus = "ok" | "error";
 export type BankStatementType =
