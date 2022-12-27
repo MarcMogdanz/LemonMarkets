@@ -61,3 +61,6 @@ export interface ApiPlaceOrderResponse extends ApiBaseResponse<ApiOrder> {}
 
 export interface ApiGetOrdersResponse
   extends ApiBaseResponseWithPagination<(ApiOrder & ApiCreatedOrder)[]> {}
+
+export interface ApiGetOrderResponse
+  extends ApiBaseResponse<ApiOrder & ApiCreatedOrder> {}

@@ -36,3 +36,7 @@ export interface GetOrdersOptions extends PaginationOptions {
   type?: OrderType;
   keyCreationId?: string;
 }
+
+export interface GetOrderOptions {
+  orderId: string;
+}
