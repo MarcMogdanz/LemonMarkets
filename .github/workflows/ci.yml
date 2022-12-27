@@ -65,6 +65,9 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Copy README for npm
+        run: cp ../README.md .
+
       - name: Publish to npm
         run: yarn release
         env:
