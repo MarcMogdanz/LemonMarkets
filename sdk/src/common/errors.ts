@@ -33,6 +33,7 @@ export class LemonError extends Error {
     }
 
     if (isAxiosError(error) && error.response?.status) {
+      // TODO: type out error responses and write type guard
       const errorCode = error.response.data.error_code;
 
       // specific errors
@@ -75,7 +76,11 @@ export class LemonError extends Error {
           );
 
         case "forbidden_in_current_state":
-          throw new LemonConflictError("Forbidden in current state");
+          throw new LemonConflictError(
+            error.response.data.error_message
+              ? `Forbidden in current state: ${error.response.data.error_message}`
+              : "Forbidden in current state"
+          );
 
         case "plan_not_allowed":
           throw new LemonPaymentRequiredError("Plan not allowed");
