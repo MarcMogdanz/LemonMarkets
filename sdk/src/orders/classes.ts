@@ -44,6 +44,7 @@ export class LemonOrder {
 }
 
 export class LemonCreatedOrder extends LemonOrder {
+  /** Will equal the API key it got created with or `dashboard`/`mobile` for creation via dashboard or mobile. */
   public keyActivationId?: string;
   public type!: string;
   public executedQuantity!: number;

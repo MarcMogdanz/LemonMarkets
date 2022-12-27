@@ -10,6 +10,7 @@ import { dateToYYYYMMDD } from "../common/functions";
 import { Plan } from "../common/types";
 import { LemonAccount, LemonBankStatement, LemonWithdrawal } from "./classes";
 import {
+  ApiCreateWithdrawalResponse,
   ApiGetAccountResponse,
   ApiGetBankStatementsResponse,
   ApiGetWithdrawalsResponse,
@@ -85,7 +86,7 @@ export class Account {
     options: CreateWithdrawalOptions
   ): Promise<LemonResponse<null>> {
     try {
-      const res = await this.axiosInstance.post(
+      const res = await this.axiosInstance.post<ApiCreateWithdrawalResponse>(
         "/account/withdrawals",
         options
       );

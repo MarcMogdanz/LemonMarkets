@@ -73,5 +73,7 @@ export interface ApiGetAccountResponse extends ApiBaseResponse<ApiAccount> {}
 export interface ApiGetWithdrawalsResponse
   extends ApiBaseResponseWithPagination<ApiWithdrawal[]> {}
 
+export interface ApiCreateWithdrawalResponse extends ApiBaseResponse<null> {}
+
 export interface ApiGetBankStatementsResponse
   extends ApiBaseResponse<ApiBankStatement[]> {}
