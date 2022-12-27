@@ -13,12 +13,14 @@ import {
   LemonOrderRegulatoryInformation,
 } from "./classes";
 import {
+  ApiCancelOrderResponse,
   ApiGetOrderResponse,
   ApiGetOrdersResponse,
   ApiPlaceOrderResponse,
 } from "./interfaces.api";
 import {
   ActivateOrderOptions,
+  CancelOrderOptions,
   GetOrderOptions,
   GetOrdersOptions,
   PlaceOrderOptions,
@@ -322,5 +324,19 @@ export class Orders {
     }
   }
 
-  // TODO: delete order
+  public async cancelOrder(
+    options: CancelOrderOptions
+  ): Promise<LemonResponse<null>> {
+    try {
+      const res = await this.axiosInstance.delete<ApiCancelOrderResponse>(
+        `/orders/${options.orderId}`
+      );
+
+      const metadata: LemonMetadata = LemonMetadata.convert(res.data);
+
+      return new LemonResponse(metadata, null);
+    } catch (err) {
+      throw LemonError.parse(err, "An error occurred while cancelling order");
+    }
+  }
 }

@@ -40,3 +40,7 @@ export interface GetOrdersOptions extends PaginationOptions {
 export interface GetOrderOptions {
   orderId: string;
 }
+
+export interface CancelOrderOptions {
+  orderId: string;
+}

@@ -64,3 +64,5 @@ export interface ApiGetOrdersResponse
 
 export interface ApiGetOrderResponse
   extends ApiBaseResponse<ApiOrder & ApiCreatedOrder> {}
+
+export interface ApiCancelOrderResponse extends ApiBaseResponse<null> {}
