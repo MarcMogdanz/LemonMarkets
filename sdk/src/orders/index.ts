@@ -138,6 +138,22 @@ export class Orders {
   public async getOrders(
     options?: GetOrdersOptions
   ): Promise<LemonResponse<LemonCreatedOrder[]>> {
+    if (
+      options?.from &&
+      typeof options.from === "string" &&
+      isNaN(Date.parse(options.from))
+    ) {
+      throw new LemonBadRequestError("Date format for `from` is invalid");
+    }
+
+    if (
+      options?.to &&
+      typeof options.to === "string" &&
+      isNaN(Date.parse(options.to))
+    ) {
+      throw new LemonBadRequestError("Date format for `to` is invalid");
+    }
+
     try {
       const res = await this.axiosInstance.get<ApiGetOrdersResponse>(
         "/orders",
@@ -171,6 +187,7 @@ export class Orders {
       const metadata: LemonMetadata = LemonMetadata.convert(res.data);
       const orders: LemonCreatedOrder[] = apiOrders.map((order) =>
         plainToClass(LemonCreatedOrder, {
+          // TODO: use helper function
           createdAt: new Date(order.created_at),
           id: order.id,
           status: order.status,
