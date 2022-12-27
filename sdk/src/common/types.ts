@@ -22,3 +22,9 @@ export type BankStatementType =
   | "dividend"
   | "tax_refunded";
 export type SortDirection = "OLDEST_FIRST" | "NEWEST_FIRST"; // asc = oldest first; desc = newest first
+export type StatementType =
+  | "order_buy"
+  | "order_sell"
+  | "split"
+  | "import"
+  | "snx";

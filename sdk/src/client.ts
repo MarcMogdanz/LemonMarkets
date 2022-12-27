@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { Account } from "./account";
 import { Orders } from "./orders";
+import { Positions } from "./positions";
 
 enum LemonMarketsEnvironment {
   PAPER = "PAPER",
@@ -39,6 +40,7 @@ class TradingClient {
 
   public account: Account;
   public orders: Orders;
+  public positions: Positions;
 
   constructor(env: LemonMarketsEnvironment, apiKey: string) {
     this.axiosInstance = axios.create({
@@ -53,6 +55,7 @@ class TradingClient {
 
     this.account = new Account(this.axiosInstance);
     this.orders = new Orders(this.axiosInstance);
+    this.positions = new Positions(this.axiosInstance);
   }
 }
 

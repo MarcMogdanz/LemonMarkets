@@ -35,9 +35,9 @@
 
 | Name            | Route                               | Status |
 | :-------------- | :---------------------------------- | :----- |
-| Get Positions   | `GET /api/v1/positions`             | ❌     |
-| Get Statements  | `GET /api/v1/positions/statements`  | ❌     |
-| Get Performance | `GET /api/v1/positions/performance` | ❌     |
+| Get Positions   | `GET /api/v1/positions`             | ✅     |
+| Get Statements  | `GET /api/v1/positions/statements`  | ✅     |
+| Get Performance | `GET /api/v1/positions/performance` | ✅     |
 
 ### Market Data API
 
