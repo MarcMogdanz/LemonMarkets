@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/MarcMogdanz/LemonMarkets/compare/v1.1.0...v1.1.1) (2022-12-27)
+
+
+### Bug Fixes
+
+* add missing date validation for `getOrders` ([b0eba55](https://github.com/MarcMogdanz/LemonMarkets/commit/b0eba55cb9aa97e6d6edfaf7ae08fce30060aee1))
+
 # [1.1.0](https://github.com/MarcMogdanz/LemonMarkets/compare/v1.0.3...v1.1.0) (2022-12-27)
 
 
