@@ -4,6 +4,9 @@
   <a href="https://github.com/MarcMogdanz/LemonMarkets/actions/workflows/ci.yml">
     <img src="https://github.com/MarcMogdanz/LemonMarkets/actions/workflows/ci.yml/badge.svg" />
   </a>
+  <a href="https://github.com/MarcMogdanz/LemonMarkets/actions/workflows/examples.yml">
+    <img src="https://github.com/MarcMogdanz/LemonMarkets/actions/workflows/examples.yml/badge.svg" />
+  </a>
 </p>
 
 ## API coverage
