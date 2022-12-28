@@ -1,6 +1,9 @@
 name: CI
 
-on: push
+on:
+  push:
+    paths:
+      - sdk/**
 
 defaults:
   run:
@@ -54,34 +57,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            sdk:
-              - 'sdk/**'
-
       - name: Setup Node.js 18
         uses: actions/setup-node@v3
-        if: steps.changes.outputs.sdk == 'true'
         with:
           node-version: 18
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-        if: steps.changes.outputs.sdk == 'true'
 
       - name: Build
         run: yarn build
-        if: steps.changes.outputs.sdk == 'true'
 
       - name: Copy README for npm
         run: cp ../README.md .
-        if: steps.changes.outputs.sdk == 'true'
 
       - name: Publish to npm
         run: yarn release
-        if: steps.changes.outputs.sdk == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
