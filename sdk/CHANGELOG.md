@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/MarcMogdanz/LemonMarkets/compare/v1.1.1...v1.2.0) (2022-12-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to v1.2.2 ([8bcf4a8](https://github.com/MarcMogdanz/LemonMarkets/commit/8bcf4a8e9272d4946c3fbcce273f62735690d5f6))
+
+
+### Features
+
+* add web example ([d123187](https://github.com/MarcMogdanz/LemonMarkets/commit/d1231876c8c585955fc89155204675f8f96c1b95))
+
 ## [1.1.1](https://github.com/MarcMogdanz/LemonMarkets/compare/v1.1.0...v1.1.1) (2022-12-27)
 
 
