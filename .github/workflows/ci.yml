@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.7.0
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -26,13 +26,13 @@ jobs:
 
       - name: Cache node modules
         id: yarn-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v3.5.0
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-node-${{ matrix.version }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Setup Node.js ${{ matrix.version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.9.1
         with:
           node-version: ${{ matrix.version }}
 
@@ -55,12 +55,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.7.0
 
       - name: Setup Node.js 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.9.1
         with:
-          node-version: 18
+          node-version: 18.20.8
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
